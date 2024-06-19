@@ -1,0 +1,47 @@
+import sqlite3
+
+# Izveidot datu bāzi
+conn = sqlite3.connect('/mnt/data/raza.db')
+cursor = conn.cursor()
+
+# Izveidot tabulas
+cursor.execute('''
+CREATE TABLE Raža (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nosaukums TEXT NOT NULL,
+    raža INTEGER NOT NULL,
+    mērvienības_id INTEGER NOT NULL
+)
+''')
+
+cursor.execute('''
+CREATE TABLE Mērvienības (
+    id INTEGER PRIMARY KEY,
+    atšifrējums TEXT NOT NULL
+)
+''')
+
+# Ievietot datus tabulā Mērvienības
+mervienibas = [
+    (1, 'tonnas'),
+    (2, 'mārciņas'),
+    (3, 'centneri')
+]
+
+cursor.executemany('INSERT INTO Mērvienības (id, atšifrējums) VALUES (?, ?)', mervienibas)
+
+# Ievietot datus tabulā Raža
+raza = [
+    ('Kvieši', 25, 1),
+    ('Rudzi', 10, 1),
+    ('Mieži', 12000, 2),
+    ('Kartupeļi', 300, 3)
+]
+
+cursor.executemany('INSERT INTO Raža (nosaukums, raža, mērvienības_id) VALUES (?, ?, ?)', raza)
+
+# Saglabāt izmaiņas un aizvērt savienojumu
+conn.commit()
+conn.close()
+
+import ace_tools as tools; tools.upload_file('/mnt/data/raza.db', 'raza.db')
