@@ -45,3 +45,19 @@ conn.commit()
 conn.close()
 
 import ace_tools as tools; tools.upload_file('/mnt/data/raza.db', 'raza.db')
+
+
+
+
+
+Datu bāzes struktūra
+Raža
+
+id (INTEGER) - Primārais atslēga, automātiski piešķirts
+nosaukums (TEXT) - Ražas nosaukums
+raža (INTEGER) - Ražas daudzums
+mērvienības_id (INTEGER) - Atslēga uz mērvienību tabulu
+Mērvienības
+
+id (INTEGER) - Primārais atslēga
+atšifrējums (TEXT) - Mērvienības nosaukums
